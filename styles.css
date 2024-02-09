@@ -6,6 +6,8 @@
 .root {
     display: flex;
     flex-direction: column;
+    background-color: #F0E7F2;
+    height: 100vh;
 }
 
 .mainContent {
