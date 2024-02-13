@@ -1,29 +1,29 @@
 const board = document.querySelector('.board');
 const cell = document.querySelector('.cell');
-// =======================
 const value = document.querySelector("#value");
 const input = document.querySelector("#sizeInput");
-value.textContent = input.value;
-input.addEventListener("input", (event) => {
-    value.textContent = Math.round(event.target.value);
-    pixelSize = event.target.value;
-    clearAll();
-});
-// =======================
 const COLOR = "black";
-
 let pixelSize = 16;
+let isMouseDown = false;
+document.body.onmousedown = () => (isMouseDown = true);
+document.body.onmouseup = () => (isMouseDown = false);
 
 window.onload = function() {
     createBoard();
 }
 
-let isMouseDown = false;
-document.body.onmousedown = () => (isMouseDown = true);
-document.body.onmouseup = () => (isMouseDown = false);
-// document.body.onmouseleave = () => (isMouseDown = false);
+// UPDATES SIZE
+value.textContent = input.value;
+input.addEventListener("input", (event) => {
+    value.textContent = Math.round(event.target.value);
+    pixelSize = value.textContent;
+    board.innerHTML = '';
+    createBoard();
+});
 
 const createBoard = function () {
+    board.innerHTML = '';
+
     for (let i = 0; i < pixelSize * pixelSize; i++) {
         let cell = document.createElement('div');
         cell.classList.add('cell');
@@ -46,19 +46,16 @@ const createBoard = function () {
     console.log("board has been created");
 }
 
-// sizeSelector.addEventListener("input", () => {
-//     createBoard();
-// });
-
 const colorCell = function (cellId) {
     const cell = document.querySelector('#' + cellId);
-    cell.classList.add('coloredCell');
+    cell.classList.add('cell');
     cell.style.backgroundColor = COLOR;
 };
 
 const clearAll = function () {
     // looks o(1) pero o(n^2) yawa ka?
-    board.innerHTML = '';
+    // cell.innerHTML = '';
     createBoard();
+    cell.removeProperty('backgroundColor');
     console.log("Board cleared");
 }
